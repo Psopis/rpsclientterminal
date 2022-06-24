@@ -15,6 +15,7 @@ fun main() {
             json(Json {
                 prettyPrint = true
                 isLenient = true
+                ignoreUnknownKeys = true
             })
         }
         install(WebSockets)
@@ -25,11 +26,12 @@ fun main() {
         val allroomseq = client.get(allrooms) {
             parameter("free", true)
         }
-        val createAllRoomsResponse = allroomseq.body<CreateAllRoomsResponse>()
-        if (createAllRoomsResponse.rooms.isEmpty()) {
+
+        val createAllRoomsResponse = allroomseq.body<itemsrooms>()
+        if (createAllRoomsResponse.items.isEmpty()) {
             roomSend(client)
         } else {
-            roomSend(client, createAllRoomsResponse.rooms.first())
+            roomSend(client, createAllRoomsResponse.items.forEach{ item -> item.id.first() }.toString()) ///////////fwkbhjghgbhsgjhdhsbsdbbbdsbsbbsb
         }
     }
     client.close()
